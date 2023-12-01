@@ -11,7 +11,6 @@ for (int i = 0; i < input.Count; i++)
 Console.WriteLine(sum);
 file = File.ReadAllLines("input.txt");
 input = new List<string>(file);
-var input2 = new List<string>(file);
 sum = 0;
 
 for (int i = 0; i < input.Count; i++)
