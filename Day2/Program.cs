@@ -49,7 +49,6 @@ Console.WriteLine(sum);
 
 //Part 2
 // Initialize sum
-dictionary = new Dictionary<string, int>();
 sum = 0;
 
 // Iterate through all lines
