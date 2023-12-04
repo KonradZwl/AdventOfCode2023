@@ -5,7 +5,14 @@ var input = new List<string>(file);
 
 var sum = 0;
 // Read through every line
+var cards = new int[input.Count];
 
+for (int i = 0; i< cards.Length; i++)
+{
+    cards[i] = 1;
+}
+
+int counter = 0;
 foreach (var line in input)
 {
     var matchCounter = 0;
@@ -40,9 +47,19 @@ foreach (var line in input)
     {
         sum += GetSum(matchCounter - 1);
     }
+
+    for (int k = 0; k < matchCounter; k++)
+    {
+        cards[counter + 1 +k] += cards[counter]; 
+    }
+
+    counter++;
 }
 
 Console.WriteLine(sum);
+Console.WriteLine(cards.Sum());
+
+
 
 int GetSum(int counter)
 {
