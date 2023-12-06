@@ -18,7 +18,7 @@ for (let x = 0; x < seedNumbers.length; x++){
             while (input[j] !== "\r" && j !== input.length){
                 let tempDestination = parseInt(input[j].split(" ")[0]);
                 let tempSource = parseInt(input[j].split(" ")[1]);
-                let tempLength = parseInt(input[j].split(" ")[2]);
+
                 
                 if (destinationNumber <= tempSource + tempLength && destinationNumber >= tempSource){ 
                     let temp = tempDestination - tempSource;
