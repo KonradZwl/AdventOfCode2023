@@ -1,8 +1,21 @@
-const {input} = require('./input');
+const { input } = require('./input');
+
+function gcd(a, b) {
+    while (b !== 0) {
+        const temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+function lcm(a, b) {
+    return (a * b) / gcd(a, b);
+}
 
 let pattern = input[0].trim();
 
-var Nodes = [];
+var Nodes = {};
 
 for (let i = 2; i < input.length; i++) {
     let nodeName = input[i].split('=')[0].trim();
@@ -13,46 +26,45 @@ for (let i = 2; i < input.length; i++) {
     Nodes[nodeName] = {
         node: nodeName,
         nodes: [node1, node2]
-    }
+    };
 }
-console.log(Nodes)
 
-let NodeNamesWithA = [];
-for (let node in Nodes){
-    if (node[node.length - 1] === 'A'){
-        NodeNamesWithA.push(Nodes[node]);
-    }
-}
+console.log(Nodes);
+
+let NodeNamesWithA = Object.values(Nodes).filter(node => node.node.endsWith('A'));
 
 console.log(NodeNamesWithA);
 
-let NodesContainZ = NodeNamesWithA.filter(x => x.node[x.node.length - 1] === 'Z');
-
-function traverseNodes(NodesWithA, patternElement) {
-    let newNodes = [];
-    counter++;
-    NodesWithA.forEach(x => {
-        if (patternElement === 'L'){
-            newNodes.push(Nodes[x.nodes[0]]);
-        }else{
-            newNodes.push(Nodes[x.nodes[1]]);
-        }
-    })
-    NodeNamesWithA = newNodes;
-}
 let patternIndex = 0;
 let counter = 0;
-while (NodesContainZ.length !== NodeNamesWithA.length){
 
-    traverseNodes(NodeNamesWithA, pattern[patternIndex])
-    console.log(NodeNamesWithA)
-
-    if (patternIndex === pattern.length - 1){
-        patternIndex = 0;
-    }else {
-        patternIndex++;
+function traverseNodes(node, patternElement) {
+    if (patternElement === 'L'){
+        counter++;
+        return Nodes[node.nodes[0]];
+    }else{
+        counter++;
+        return Nodes[node.nodes[1]];
     }
-    NodesContainZ = NodeNamesWithA.filter(x => x.node[x.node.length - 1] === 'Z');
-    console.log(counter)
 }
-console.log(counter)
+
+let arrayOfTraversels = [];
+for (let i = 0; i < NodeNamesWithA.length; i++){
+    let currentNodeName = NodeNamesWithA[i];
+    while (!currentNodeName.node.endsWith('Z')){
+
+        currentNodeName = traverseNodes(Nodes[currentNodeName.node], pattern[patternIndex])
+        console.log(currentNodeName)
+
+        if (patternIndex === pattern.length - 1){
+            patternIndex = 0;
+        }else {
+            patternIndex++;
+        }
+    }
+    arrayOfTraversels.push(counter);
+    counter = 0;
+    patternIndex = 0;
+}
+
+console.log(arrayOfTraversels)
